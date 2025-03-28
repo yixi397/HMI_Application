@@ -1,0 +1,100 @@
+﻿<Page x:Class="HMI_Application.Views.MonitorIOPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HMI_Application.Views"
+      xmlns:VM="clr-namespace:HMI_Application.ViewModels"
+      xmlns:Con="clr-namespace:HMI_Application.Control"
+      xmlns:logon="clr-namespace:HMI_Application.Dialog_box"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      d:DataContext="{d:DesignInstance Type=VM:MonitorIOVM }"
+      Title="MonitorIOPage"
+      Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.ContextMenu>
+            <ContextMenu x:Name="contextMenu">
+                <MenuItem Header="保存修改" Command="{Binding saveCommand}"></MenuItem>
+            </ContextMenu>
+        </Grid.ContextMenu>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DataGrid ItemsSource="{Binding Datas.Input}"
+                  CanUserAddRows="False" 
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True" x:Name="input" >
+            
+            <DataGrid.Columns>
+                
+                <DataGridTextColumn Header="IO地址" Binding="{Binding ShowAddress}" Width="auto"></DataGridTextColumn>
+                
+                <DataGridTemplateColumn  Header="状态"  Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Value}">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="LightGray"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Value}" Value="true">
+                                                <Setter Property="Background" Value="LightGreen"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="注释" Binding="{Binding Note}" Width="*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <DataGrid Grid.Column="1" ItemsSource="{Binding Datas.Output}"
+          CanUserAddRows="False" 
+          AutoGenerateColumns="False"
+          IsReadOnly="True" x:Name="output">
+            <DataGrid.Columns>
+                
+                <DataGridTextColumn Header="IO地址" Binding="{Binding ShowAddress}" Width="auto"></DataGridTextColumn>
+                <DataGridTemplateColumn IsReadOnly="True"  Header="状态"  Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Value}">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="LightGray"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Value}" Value="true">
+                                                <Setter Property="Background" Value="LightGreen"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn  Header="操作"  Width="100" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="取反" 
+                                    Command="{Binding  DataContext.altValueCommand, 
+                                    RelativeSource={RelativeSource AncestorType={x:Type Page}}}" 
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, 
+                                    Path=DataContext}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="注释" Binding="{Binding Note}" Width="*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

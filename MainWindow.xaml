@@ -1,0 +1,178 @@
+﻿<Window x:Class="HMI_Application.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HMI_Application"
+        xmlns:Con="clr-namespace:HMI_Application.Control"
+        xmlns:nlog ="clr-namespace:NLog.WPF;assembly=NLog.WPF"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowVM}"
+        Title="HMI_Application V1.2.9" Height="675" Width="980"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="IndicatorStyleYellow" TargetType="CheckBox" >
+            <Setter Property="IsEnabled" Value="False"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid>
+                            <Ellipse x:Name="IndicatorEllipse" Fill="Gray" Stroke="Black" StrokeThickness="1" Width="15" Height="15"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="IndicatorEllipse" Property="Fill" Value="#feff42"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="IndicatorEllipse" Property="Fill" Value="#a0a136"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="IndicatorStyleGreen" TargetType="CheckBox" >
+            <Setter Property="IsEnabled" Value="False"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid>
+                            <Ellipse x:Name="IndicatorEllipse" Fill="Gray" Stroke="Black" StrokeThickness="1" Width="15" Height="15"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="IndicatorEllipse" Property="Fill" Value="#33f132"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="IndicatorEllipse" Property="Fill" Value="#155214"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="IndicatorStyleRed" TargetType="CheckBox" >
+            <Setter Property="IsEnabled" Value="False"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid>
+                            <Ellipse x:Name="IndicatorEllipse" Fill="Gray" Stroke="Black" StrokeThickness="1" Width="15" Height="15"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="IndicatorEllipse" Property="Fill" Value="#fe0b22"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="IndicatorEllipse" Property="Fill" Value="#7b2830"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="19*"/>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="836*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--菜单-->
+        <GroupBox Header="导航">
+            <ItemsControl ItemsSource="{Binding KeyValuePairs}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Width="79" Margin="1" VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Left"
+                        Background="Transparent"
+                        Content="{Binding Key}" 
+                        Command="{Binding DataContext.pageNavigateCommand, 
+                        RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                        CommandParameter="{Binding Key}"></Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+        </GroupBox>
+
+
+
+        <!--内容区域-->
+        <Grid Grid.Column="1" Grid.ColumnSpan="4">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="200"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!--界面内容-->
+            <GroupBox Grid.Row="0" Header="{Binding CurrUrl}">
+                <Frame x:Name="mainFrame" Margin="5" NavigationUIVisibility="Hidden"></Frame>
+            </GroupBox>
+
+
+
+            <!--信息输出-->
+            <GroupBox Grid.Row="1" Header="日志信息:">
+                <nlog:NlogRichTextBox x:Name="richTextBoxLog"  Grid.Row="1"
+                IsLightTheme="False" />
+            </GroupBox>
+
+
+
+
+            <!--状态栏-->
+            <StatusBar Grid.Row="2"  HorizontalAlignment="Right" >
+                <DockPanel>
+                    <!--指示灯-->
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" Margin="1 1 20 1">
+                        <TextBlock Text="设备状态三色灯:" ></TextBlock>
+                        <CheckBox Margin="0 0 5 0" Style="{StaticResource IndicatorStyleYellow}"  IsChecked="{Binding Datas.Rbool[20].Value}"/>
+                        <CheckBox Margin="0 0 5 0" Style="{StaticResource IndicatorStyleGreen}"  IsChecked="{Binding Datas.Rbool[21].Value}"/>
+                        <CheckBox Margin="0 0 5 0" Style="{StaticResource IndicatorStyleRed}"  IsChecked="{Binding Datas.Rbool[22].Value}"/>
+                    </StackPanel>
+                    <!--其他-->
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+
+
+
+                        <TextBlock Margin="1" Text="连接状态:"></TextBlock>
+
+                        <Con:BitStateShow Margin="1 1 15 1"  State="{Binding ShowIsconnect}" TrueText="以连接" FalseText="未连接"></Con:BitStateShow>
+
+
+                        <TextBlock Margin="1" Text="采集时间:"></TextBlock>
+                        <TextBlock Margin="1 1 15 1" MinWidth="50" Text="{Binding ShowGatherTime,StringFormat=' {0:F2}ms'}"></TextBlock>
+
+                        <TextBlock Margin="1" Text="内存:"></TextBlock>
+                        <TextBlock Margin="1 1 0 1"  Text="{Binding ShowMemoryUsageInM,StringFormat=' {0:F2}MB'}"></TextBlock>
+
+                        <TextBlock Margin="30 1 0 1" d:Text="2025-1-16-18:23" Text="{Binding ShowDate}"></TextBlock>
+                    </StackPanel>
+
+                    <Border></Border>
+                </DockPanel>
+
+            </StatusBar>
+
+        </Grid>
+
+
+
+
+
+
+
+    </Grid>
+</Window>

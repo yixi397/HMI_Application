@@ -1,0 +1,35 @@
+﻿<Page x:Class="HMI_Application.Views.MonitorVarPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HMI_Application.Views"
+      xmlns:VM="clr-namespace:HMI_Application.ViewModels"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      d:DataContext="{d:DesignInstance Type=VM:MonitorVarVM}"
+      Title="MonitorVarPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel  Orientation="Horizontal" Margin="3">
+            <ComboBox Width="100" FontSize="16" ItemsSource="{Binding ShowkeyValuePairs.Keys}" SelectedItem="{Binding showCurrSelectedSelect}"></ComboBox>
+        </StackPanel>
+        
+        <DataGrid Grid.Row="1" ItemsSource="{Binding ShowCurrItemsSource}" 
+                  CanUserAddRows="False" 
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"></DataGridTextColumn>
+                <DataGridTextColumn Header="类别" Binding="{Binding Name}" Width="auto"></DataGridTextColumn>
+                <DataGridTextColumn Header="数据类型" Binding="{Binding Type}" Width="60"></DataGridTextColumn>
+                <DataGridTextColumn Header="地址" Binding="{Binding Address}" Width="auto"></DataGridTextColumn>
+                <DataGridTextColumn Header="当前值" Binding="{Binding Value}" Width="100"></DataGridTextColumn>
+                <DataGridTextColumn Header="注释" Binding="{Binding Note}" Width="*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

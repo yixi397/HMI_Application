@@ -1,0 +1,60 @@
+﻿<TextBlock   x:Class="HMI_Application.Control.AxisStateShow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HMI_Application.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <TextBlock >
+        <TextBlock.Style>
+            <Style TargetType="TextBlock">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding State ,RelativeSource={RelativeSource AncestorType={x:Type local:AxisStateShow}}}" Value="0">
+                        <Setter Property="Background" Value="LightGray"></Setter>
+                        <Setter Property="Text" Value="未使能"></Setter>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding State ,RelativeSource={RelativeSource AncestorType={x:Type local:AxisStateShow}}}" Value="1">
+                        <Setter Property="Background" Value="Red"></Setter>
+                        <Setter Property="Text" Value="故障停机"></Setter>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding State ,RelativeSource={RelativeSource AncestorType={x:Type local:AxisStateShow}}}" Value="2">
+                        <Setter Property="Background" Value="YellowGreen"></Setter>
+                        <Setter Property="Text" Value="停止中"></Setter>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding State ,RelativeSource={RelativeSource AncestorType={x:Type local:AxisStateShow}}}" Value="3">
+                        <Setter Property="Background" Value="LightGreen"></Setter>
+                        <Setter Property="Text" Value="就绪"></Setter>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding State ,RelativeSource={RelativeSource AncestorType={x:Type local:AxisStateShow}}}" Value="4">
+                        <Setter Property="Background" Value="Yellow"></Setter>
+                        <Setter Property="Foreground" Value="Black"></Setter>
+                        <Setter Property="Text" Value="离散运动中"></Setter>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding State ,RelativeSource={RelativeSource AncestorType={x:Type local:AxisStateShow}}}" Value="5">
+                        <Setter Property="Background" Value="Yellow"></Setter>
+                        <Setter Property="Foreground" Value="Black"></Setter>
+                        <Setter Property="Text" Value="连续运动中"></Setter>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding State ,RelativeSource={RelativeSource AncestorType={x:Type local:AxisStateShow}}}" Value="6">
+                        <Setter Property="Background" Value="Yellow"></Setter>
+                        <Setter Property="Foreground" Value="Black"></Setter>
+                        <Setter Property="Text" Value="原点回归中"></Setter>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding State ,RelativeSource={RelativeSource AncestorType={x:Type local:AxisStateShow}}}" Value="7">
+                        <Setter Property="Background" Value="Yellow"></Setter>
+                        <Setter Property="Foreground" Value="Black"></Setter>
+                        <Setter Property="Text" Value="同步运行中"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </TextBlock.Style>
+    </TextBlock>
+    
+</TextBlock>

@@ -1,0 +1,28 @@
+﻿<TextBlock x:Class="HMI_Application.Control.BitStateShow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HMI_Application.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" >
+    <!--<TextBlock.Style>
+        <Style TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding State, RelativeSource={RelativeSource AncestorType={x:Type local:BitStateShow}}}" Value="true">
+                    <Setter Property="Background" 
+                            Value="{Binding  TrueBackground,RelativeSource={RelativeSource AncestorType={x:Type local:BitStateShow}}}"/>
+                    <Setter Property="Text" 
+                            Value="{Binding  TrueText,RelativeSource={RelativeSource AncestorType={x:Type local:BitStateShow}}}"></Setter>
+                </DataTrigger>
+            
+                <DataTrigger Binding="{Binding State, RelativeSource={RelativeSource AncestorType={x:Type local:BitStateShow}}}" Value="false">
+                    <Setter Property="Background" 
+                            Value="{Binding  FalseBackground,RelativeSource={RelativeSource AncestorType={x:Type local:BitStateShow}}}"/>
+                    <Setter Property="Text" 
+                            Value="{Binding  FalseText,RelativeSource={RelativeSource AncestorType={x:Type local:BitStateShow}}}"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </TextBlock.Style>-->
+</TextBlock>
